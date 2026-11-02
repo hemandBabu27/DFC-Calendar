@@ -510,11 +510,17 @@ document.addEventListener('visibilitychange',function(){if(!document.hidden&&ses
 
 render();
 
-if(!window.supabase||SUPABASE_URL.indexOf('YOUR-')>=0||SUPABASE_ANON_KEY.indexOf('YOUR-')>=0){
-  showNote('Add your Supabase project URL and anon key at the top of the script in index.html.');
+if(!window.supabase){
+  showNote("Couldn't load the Supabase library. Check your connection and reload.");
+}else if(!SUPABASE_URL||!SUPABASE_ANON_KEY||SUPABASE_URL.indexOf('YOUR-')>=0||SUPABASE_ANON_KEY.indexOf('YOUR-')>=0){
+  showNote('Supabase is not set up yet. The project URL and anon key are missing from this deployed page.');
 }else{
-  sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
-  sb.auth.onAuthStateChange(function(ev,s){setTimeout(function(){setSession(s)},0)});
+  try{
+    sb=window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY);
+    sb.auth.onAuthStateChange(function(ev,s){setTimeout(function(){setSession(s)},0)});
+  }catch(err){
+    showNote('Supabase settings look invalid. Check the project URL and anon key.');
+  }
 }
 })();
 </script>
