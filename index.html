@@ -65,6 +65,12 @@ h1 span{font-weight:400;color:var(--ink-2)}
 .cell{min-height:108px;padding:6px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0;cursor:pointer}
 .cell:hover{background:#fafafc}
 .cell.sel{background:var(--fill)}
+/* Fill the complete date block with its event color */
+.cell.event-fill{background:var(--event-tint,#fff)}
+.cell.event-fill:hover{filter:saturate(1.05)}
+.cell.event-fill.sel{box-shadow:inset 0 0 0 2px var(--event-color)}
+.cell.event-fill.today .num{background:var(--today);color:#fff}
+
 .num{align-self:flex-start;width:28px;height:28px;border-radius:50%;border:0;background:none;font-weight:600;font-size:15px;display:grid;place-items:center;color:var(--ink);padding:0}
 .cell.out .num{color:var(--ink-3)}
 .cell.today .num{background:var(--today);color:#fff}
@@ -268,8 +274,16 @@ function renderGrid(){
     (function(){
       var d=new Date(y,m,1-lead+i), k=key(d), list=by[k]||[];
       var cls='cell'+(d.getMonth()!==m?' out':'')+(k===tk?' today':'')+(k===selected?' sel':'');
+      if(list.length)cls+=' event-fill';
       var label=fmtFull.format(d)+(list.length?', '+list.length+(list.length===1?' event':' events'):'');
-      var cell=h('div',{class:cls,onclick:function(ev){select(k,ev.detail===0&&ev.target.classList.contains('num'))}},
+      var cellProps={class:cls,onclick:function(ev){select(k,ev.detail===0&&ev.target.classList.contains('num'))}};
+      if(list.length){
+        var firstColor=list[0].color||'blue';
+        cellProps.style='--event-color:var(--'+firstColor+');--event-tint:var(--t)';
+        /* CSS custom vars are defined by the color class; keep the event's tint scoped to this cell. */
+        cellProps.class+=' c-'+firstColor;
+      }
+      var cell=h('div',cellProps,
         h('button',{type:'button',class:'num',text:String(d.getDate()),'aria-label':label,'aria-pressed':k===selected?'true':'false'}));
       if(list.length){
         var chips=h('div',{class:'chips'});
