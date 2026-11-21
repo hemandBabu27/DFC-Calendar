@@ -61,7 +61,7 @@ h1 span{font-weight:400;color:var(--ink-2)}
 
 .dow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
 .dow div{padding:6px 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
-.days{border-top:1px solid var(--line);border-left:1px solid var(--line)}
+.days{border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative;isolation:isolate}\n/* DFC logo watermark in the calendar's highlighted center area */\n.days::after{content:'';position:absolute;z-index:5;pointer-events:none;top:38%;left:45%;width:min(34%,220px);aspect-ratio:1;background:url('assets/dfc-watermark.svg') center/contain no-repeat;opacity:.5;transform:translate(-50%,-50%)}\n@media(max-width:640px){.days::after{width:min(40%,150px);top:40%;left:50%}}
 .cell{min-height:108px;padding:6px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0;cursor:pointer}
 .cell:hover{background:#fafafc}
 .cell.sel{background:var(--fill)}
