@@ -63,8 +63,8 @@ h1 span{font-weight:400;color:var(--ink-2)}
 .dow,.days{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
 .dow div{padding:6px 8px;font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-2)}
 .days{border-top:1px solid var(--line);border-left:1px solid var(--line);position:relative;isolation:isolate}
-.days::after{content:'';position:absolute;z-index:5;pointer-events:none;top:50%;left:50%;width:min(62%,420px);aspect-ratio:1;background:url('./DFC%20LOGO.png') center/contain no-repeat;opacity:.3;transform:translate(-50%,-50%)}
-@media(max-width:640px){.days::after{width:min(72%,260px)}}
+.days::after{content:'';position:absolute;z-index:5;pointer-events:none;top:50%;left:50%;width:130%;max-width:760px;aspect-ratio:1;background:url('./DFC%20LOGO.png') center/contain no-repeat;opacity:.3;transform:translate(-50%,-50%)}
+@media(max-width:640px){.days::after{width:140%;max-width:520px}}
 .cell{min-height:108px;padding:6px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);display:flex;flex-direction:column;gap:4px;min-width:0;cursor:pointer}
 .cell:hover{background:#fafafc}
 .cell.sel{background:var(--fill)}
