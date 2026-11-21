@@ -1,0 +1,70 @@
+name: DFC WhatsApp 14-day reminders
+
+on:
+  schedule:
+    - cron: "30 3 * * *" # 09:00 Asia/Kolkata
+  workflow_dispatch:
+    inputs:
+      mode:
+        description: "Link WhatsApp, list groups, or check reminders"
+        required: true
+        type: choice
+        options:
+          - setup
+          - list-groups
+          - send
+        default: setup
+
+permissions:
+  contents: write
+
+concurrency:
+  group: dfc-whatsapp-reminders
+  cancel-in-progress: false
+
+jobs:
+  whatsapp:
+    runs-on: ubuntu-latest
+    timeout-minutes: 6
+    env:
+      REMINDER_MODE: ${{ github.event.inputs.mode || 'send' }}
+      WA_SESSION_ENCRYPTION_KEY: ${{ secrets.WA_SESSION_ENCRYPTION_KEY }}
+      WHATSAPP_GROUP_JID: ${{ secrets.WHATSAPP_GROUP_JID }}
+      SUPABASE_URL: https://wfdztznhzfxwfjrqqmqq.supabase.co
+      SUPABASE_ANON_KEY: sb_publishable_33DSLhmEs3EQG-I6chmGPg_mlZTHwiH
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Validate session encryption secret
+        run: |
+          if [ -z "$WA_SESSION_ENCRYPTION_KEY" ]; then
+            echo "::error::Add WA_SESSION_ENCRYPTION_KEY in Settings → Secrets and variables → Actions."
+            exit 1
+          fi
+      - name: Restore encrypted WhatsApp session
+        run: node whatsapp-reminders/session-encryption.mjs decrypt
+      - name: Install WhatsApp automation dependencies
+        run: npm install --no-audit --no-fund
+        working-directory: whatsapp-reminders
+      - name: Run group setup or reminder sender
+        run: node reminders.mjs
+        working-directory: whatsapp-reminders
+      - name: Encrypt WhatsApp session for storage
+        if: always()
+        run: node whatsapp-reminders/session-encryption.mjs encrypt
+      - name: Commit encrypted session and reminder ledger
+        if: always()
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A whatsapp-reminders/
+          if git diff --cached --quiet; then
+            echo "No reminder ledger or session changes to commit."
+          else
+            git commit -m "Update encrypted WhatsApp reminder session/ledger"
+            git push
+          fi

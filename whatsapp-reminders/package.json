@@ -1,0 +1,13 @@
+{
+  "name": "dfc-whatsapp-reminders",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "send": "node reminders.mjs"
+  },
+  "dependencies": {
+    "@whiskeysockets/baileys": "6.7.18",
+    "qrcode-terminal": "0.12.0",
+    "pino": "9.5.0"
+  }
+}
