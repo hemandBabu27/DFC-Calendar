@@ -1,16 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500">
-<circle cx="250" cy="250" r="238" fill="#fff" stroke="#08265f" stroke-width="8"/>
-<circle cx="250" cy="250" r="222" fill="none" stroke="#08265f" stroke-width="4"/>
-<circle cx="250" cy="250" r="154" fill="none" stroke="#08265f" stroke-width="5"/>
-<path id="arc" d="M65 250 A185 185 0 0 1 435 250" fill="none"/>
-<text fill="#08265f" font-family="Arial,sans-serif" font-size="48" letter-spacing="1" text-anchor="middle"><textPath href="#arc" startOffset="50%" text-anchor="middle">DEFENCE FOCUS CLUB</textPath></text>
-<g stroke="#08265f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none">
-<path d="M155 168 Q167 235 220 282 Q270 326 310 294 Q337 273 310 243 Q271 191 183 156 Q154 144 155 168Z" fill="#fff"/>
-<path d="M159 164 Q235 251 311 291"/><path d="M193 215 L310 162"/><path d="M310 162 L320 151 L332 157 L324 173 Q316 177 310 162Z" fill="#fff"/>
-<path d="M312 164 L273 274"/><path d="M273 274 Q263 287 252 278 Q245 270 257 263"/>
-<path d="M190 281 L177 320 L321 320 L305 281"/><path d="M177 320 L170 340 L330 340 L321 320"/><path d="M168 340 L160 357 L340 357 L331 340"/><path d="M160 357 L154 373 L346 373 L340 357"/>
-<path d="M191 289 L183 318 M215 289 L211 318 M239 289 L237 318 M263 289 L263 318 M287 289 L289 318"/>
-</g>
-<g fill="#08265f"><path d="M118 390l-8 24 21-15 22 15-8-24 20-15h-26l-8-25-8 25H91z"/><path d="M382 390l-8 24 21-15 22 15-8-24 20-15h-26l-8-25-8 25h-26z"/></g>
-<text x="250" y="440" font-family="Arial,sans-serif" font-size="44" fill="#08265f" text-anchor="middle">TKMCE</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500"><circle cx="250" cy="250" r="238" fill="#fff" stroke="#08265f" stroke-width="8"/><circle cx="250" cy="250" r="222" fill="none" stroke="#08265f" stroke-width="4"/><circle cx="250" cy="250" r="154" fill="none" stroke="#08265f" stroke-width="5"/><path id="arc" d="M65 250 A185 185 0 0 1 435 250" fill="none"/><text fill="#08265f" font-family="Arial,sans-serif" font-size="48" letter-spacing="1" text-anchor="middle"><textPath href="#arc" startOffset="50%" text-anchor="middle">DEFENCE FOCUS CLUB</textPath></text><g stroke="#08265f" stroke-width="7" stroke-linecap="round" stroke-linejoin="round" fill="none"><path d="M155 168 Q167 235 220 282 Q270 326 310 294 Q337 273 310 243 Q271 191 183 156 Q154 144 155 168Z" fill="#fff"/><path d="M159 164 Q235 251 311 291"/><path d="M193 215 L310 162"/><path d="M310 162 L320 151 L332 157 L324 173 Q316 177 310 162Z" fill="#fff"/><path d="M312 164 L273 274"/><path d="M273 274 Q263 287 252 278 Q245 270 257 263"/><path d="M190 281 L177 320 L321 320 L305 281"/><path d="M177 320 L170 340 L330 340 L321 320"/><path d="M168 340 L160 357 L340 357 L331 340"/><path d="M160 357 L154 373 L346 373 L340 357"/><path d="M191 289 L183 318 M215 289 L211 318 M239 289 L237 318 M263 289 L263 318 M287 289 L289 318"/></g><g fill="#08265f"><path d="M118 390l-8 24 21-15 22 15-8-24 20-15h-26l-8-25-8 25H91z"/><path d="M382 390l-8 24 21-15 22 15-8-24 20-15h-26l-8-25-8 25h-26z"/></g><text x="250" y="440" font-family="Arial,sans-serif" font-size="44" fill="#08265f" text-anchor="middle">TKMCE</text></svg>
