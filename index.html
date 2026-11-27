@@ -190,6 +190,7 @@ h1 span{font-weight:400;color:var(--ink-2)}
       <div><label for="fDate">Date</label><input id="fDate" type="date" required></div>
       <div><label for="fTime">Time (optional)</label><input id="fTime" type="time"></div>
     </div>
+    <p class="sub" style="margin:8px 0 0">New events are automatically copied to the same date for the next 10 years. Each year's copy can be edited or deleted separately.</p>
     <label for="fNotes">Notes</label>
     <textarea id="fNotes" maxlength="1000"></textarea>
     <div class="lg" id="colorLbl">Colour</div>
@@ -413,7 +414,7 @@ $('form').addEventListener('submit',function(e){
   saveBtn.disabled=true;setErr('');
   withRetry(function(){return saveEvent(wasEdit?id:null,data)})
     .then(function(){
-      closeForm();toast(wasEdit?'Event updated':'Event added');
+      closeForm();toast(wasEdit?'Event updated':'Event added with 10-year copies');
       var d=parseKey(date);view=new Date(d.getFullYear(),d.getMonth(),1);selected=date;render();
     })
     .catch(function(ex){setErr(errMsg(ex))})
@@ -477,9 +478,23 @@ function fetchAll(){
 function saveEvent(id,data){
   if(!canWrite||!sb)return Promise.reject({code:'invalid_argument'});
   var row={title:data.title,date:data.date,time:data.time,notes:data.notes,color:data.color,updated_at:new Date().toISOString()};
-  var q=id?sb.from(TABLE).update(row).eq('id',id).select('id'):sb.from(TABLE).insert(row);
-  return q.then(unwrap).then(function(res){
-    if(id&&(!res.data||!res.data.length))throw {code:'invalid_argument'};
+  /* New events are saved as separate annual occurrences for the next 10 years.
+     Each occurrence remains independently editable/deletable in the calendar. */
+  if(!id){
+    var parts=data.date.split('-').map(Number);
+    var year=parts[0], month=parts[1], day=parts[2];
+    var rows=[row];
+    for(var offset=1;offset<=10;offset++){
+      var nextYear=year+offset;
+      var check=new Date(Date.UTC(nextYear,month-1,day));
+      /* Skip dates that do not exist in a given year (for example, Feb 29). */
+      if(check.getUTCFullYear()!==nextYear||check.getUTCMonth()!==month-1||check.getUTCDate()!==day)continue;
+      rows.push({title:data.title,date:nextYear+'-'+pad(month)+'-'+pad(day),time:data.time,notes:data.notes,color:data.color,updated_at:new Date().toISOString()});
+    }
+    return sb.from(TABLE).insert(rows).then(unwrap).then(function(){return fetchAll()});
+  }
+  return sb.from(TABLE).update(row).eq('id',id).select('id').then(unwrap).then(function(res){
+    if(!res.data||!res.data.length)throw {code:'invalid_argument'};
     return fetchAll();
   });
 }
